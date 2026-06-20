@@ -17,7 +17,7 @@ Add the plugin to your spec. Use a local path while developing, or point to your
 
 ```lua
 {
-  "your-user/mono-green.nvim",
+  "alexesba/mono-green.nvim",
   -- Local development:
   -- dir = "~/Projects/mono-green",
   lazy = false,
@@ -33,7 +33,7 @@ Add the plugin to your spec. Use a local path while developing, or point to your
 
 ```lua
 use({
-  "your-user/mono-green.nvim",
+  "alexesba/mono-green.nvim",
   config = function()
     require("mono-green").setup()
     vim.cmd.colorscheme("mono-green")
@@ -46,7 +46,7 @@ use({
 Clone the repository and add it to your runtime path:
 
 ```sh
-git clone https://github.com/your-user/mono-green.nvim ~/.local/share/nvim/site/pack/plugins/start/mono-green.nvim
+git clone https://github.com/alexesba/mono-green.nvim ~/.local/share/nvim/site/pack/plugins/start/mono-green.nvim
 ```
 
 Then enable it in your config:
