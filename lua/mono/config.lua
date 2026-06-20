@@ -1,4 +1,6 @@
 local M = {
+  style = 'green',
+  colors_name = nil,
   terminal = true,
   italic_comments = true,
   italic_strings = true,

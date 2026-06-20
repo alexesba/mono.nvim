@@ -1,8 +1,20 @@
-# mono-green.nvim
+# mono.nvim
 
-A Neovim colorscheme based on the [Mono Green](https://github.com/Gogh-Co/Gogh/blob/master/themes/Mono%20Green.yml) theme from [Gogh](https://gogh-co.github.io/Gogh/).
+Neovim colorschemes based on the [Gogh Mono](https://github.com/Gogh-Co/Gogh) terminal themes. Each variant is a dark, monochromatic phosphor-style theme with a single foreground hue on a deep background.
 
-It is a dark, monochromatic green theme: bright phosphor green text on a deep green background. Because the Gogh palette uses a single foreground color for almost every ANSI slot, syntax is differentiated with bold, italic, and underline rather than hue.
+Because the Gogh palettes use one color for almost every ANSI slot, syntax is differentiated with bold, italic, and underline rather than hue.
+
+## Variants
+
+| Colorscheme | Gogh theme | Foreground | Background |
+|-------------|------------|------------|------------|
+| `mono` | Mono Green (default) | `#0BFF00` | `#022B00` |
+| `mono-green` | Mono Green | `#0BFF00` | `#022B00` |
+| `mono-amber` | Mono Amber | `#FF9400` | `#2B1900` |
+| `mono-cyan` | Mono Cyan | `#00CCFF` | `#00222B` |
+| `mono-red` | Mono Red | `#FF3600` | `#2B0C00` |
+| `mono-white` | Mono White | `#FAFAFA` | `#262626` |
+| `mono-yellow` | Mono Yellow | `#FFD300` | `#2B2400` |
 
 ## Requirements
 
@@ -13,81 +25,86 @@ It is a dark, monochromatic green theme: bright phosphor green text on a deep gr
 
 ### lazy.nvim
 
-Add the plugin to your spec. Use a local path while developing, or point to your Git remote once published:
-
 ```lua
 {
-  "alexesba/mono-green.nvim",
-  -- Local development:
-  -- dir = "~/Projects/mono-green",
+  "alexesba/mono.nvim",
   lazy = false,
   priority = 1000,
   config = function()
-    require("mono-green").setup()
-    vim.cmd.colorscheme("mono-green")
+    require("mono").setup()
+    vim.cmd.colorscheme("mono")
   end,
 }
+```
+
+Pick any variant:
+
+```lua
+vim.cmd.colorscheme("mono-cyan")
 ```
 
 ### packer.nvim
 
 ```lua
 use({
-  "alexesba/mono-green.nvim",
+  "alexesba/mono.nvim",
   config = function()
-    require("mono-green").setup()
-    vim.cmd.colorscheme("mono-green")
+    require("mono").setup()
+    vim.cmd.colorscheme("mono")
   end,
 })
 ```
 
 ### Manual
 
-Clone the repository and add it to your runtime path:
-
 ```sh
-git clone https://github.com/alexesba/mono-green.nvim ~/.local/share/nvim/site/pack/plugins/start/mono-green.nvim
+git clone https://github.com/alexesba/mono.nvim ~/.local/share/nvim/site/pack/plugins/start/mono.nvim
 ```
 
-Then enable it in your config:
+Then enable a variant in your config:
 
 ```lua
-require("mono-green").setup()
-vim.cmd.colorscheme("mono-green")
+require("mono").setup()
+vim.cmd.colorscheme("mono-amber")
 ```
 
 ## Usage
 
-Call `setup()` before applying the colorscheme if you want to change any options:
+Call `setup()` before applying the colorscheme if you want to change options:
 
 ```lua
-require("mono-green").setup({
+require("mono").setup({
+  style = "cyan",
   terminal = true,
   italic_comments = true,
   italic_strings = true,
   bold_keywords = true,
 })
 
-vim.cmd.colorscheme("mono-green")
+vim.cmd.colorscheme("mono-cyan")
 ```
 
-You can also set the colorscheme without `setup()` — defaults are used automatically:
+You can also load variants directly without setting `style` in setup:
 
 ```lua
-vim.cmd.colorscheme("mono-green")
+require("mono").setup()
+vim.cmd.colorscheme("mono-red")
 ```
 
-To reload after changing config during a session:
+Each `colors/mono-*.lua` entry point sets the matching Gogh palette automatically, similar to [sonokai](https://github.com/sontungexpt/sonokai).
+
+To reload after changing config:
 
 ```vim
-:lua require("mono-green").setup({ bold_keywords = false })
-:colorscheme mono-green
+:lua require("mono").setup({ bold_keywords = false })
+:colorscheme mono
 ```
 
 ## Configuration
 
 | Option | Default | Description |
 |--------|---------|-------------|
+| `style` | `"green"` | Active palette: `green`, `amber`, `cyan`, `red`, `white`, or `yellow` |
 | `terminal` | `true` | Set `:terminal` ANSI colors to match the Gogh palette |
 | `italic_comments` | `true` | Render comments in italic |
 | `italic_strings` | `true` | Render strings in italic |
@@ -96,21 +113,18 @@ To reload after changing config during a session:
 
 ### Custom highlights
 
-Override any highlight group after the theme is applied:
-
 ```lua
-require("mono-green").setup({
+require("mono").setup({
   overrides = {
     CursorLine = { bg = "#034000" },
-    LineNr = { fg = "#0BFF00" },
   },
 })
 ```
 
-Or use a function:
+Or with a function:
 
 ```lua
-require("mono-green").setup({
+require("mono").setup({
   overrides = function()
     return {
       ["@function"] = { bold = false, underline = true },
@@ -119,22 +133,11 @@ require("mono-green").setup({
 })
 ```
 
-## Palette
-
-Colors are taken directly from the Gogh Mono Green theme:
-
-| Name | Hex | Gogh role |
-|------|-----|-----------|
-| Background | `#022B00` | Background |
-| Foreground | `#0BFF00` | Foreground / ANSI 2–16 |
-| Black | `#034000` | ANSI 0 (host / dim) |
-| Cursor | `#0BFF00` | Cursor |
-
 ## Highlighting approach
 
 | Element | Style |
 |---------|-------|
-| Comments | Dim green + italic |
+| Comments | Dim + italic |
 | Strings | Italic |
 | Keywords | Bold |
 | Functions | Bold |
@@ -147,26 +150,34 @@ Treesitter, LSP diagnostics, Git signs, Telescope, Cmp, Blink Cmp, Neo-tree, Nvi
 
 ## Matching your terminal
 
-If you use the Gogh Mono Green theme in your terminal (kitty, Ghostty, WezTerm, etc.), Neovim and your shell will share the same palette. With `terminal = true`, Neovim's built-in terminal also uses the Gogh ANSI colors.
-
-Example with Gogh:
+Install the matching Gogh theme so your terminal and Neovim share the same palette:
 
 ```sh
 gogh install "Mono Green"
+gogh install "Mono Cyan"
 ```
+
+With `terminal = true`, Neovim's built-in terminal also uses the Gogh ANSI colors for the active variant.
 
 ## Project structure
 
 ```
-mono-green/
-├── colors/mono-green.lua       # colorscheme entry point
-└── lua/mono-green/
-    ├── init.lua                # setup() and colorscheme()
-    ├── colors.lua              # Gogh palette
-    ├── config.lua              # default options
-    └── highlights.lua          # highlight groups
+mono.nvim/
+├── colors/
+│   ├── mono.lua              # default (green)
+│   ├── mono-green.lua
+│   ├── mono-amber.lua
+│   ├── mono-cyan.lua
+│   ├── mono-red.lua
+│   ├── mono-white.lua
+│   └── mono-yellow.lua
+└── lua/mono/
+    ├── init.lua              # setup() and colorscheme()
+    ├── colors.lua            # Gogh palettes
+    ├── config.lua            # options
+    └── highlights.lua        # highlight groups
 ```
 
 ## Credits
 
-- [Gogh](https://github.com/Gogh-Co/Gogh) — original Mono Green terminal theme
+- [Gogh](https://github.com/Gogh-Co/Gogh) — original Mono terminal themes
