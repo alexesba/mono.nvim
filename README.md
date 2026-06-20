@@ -16,6 +16,8 @@ Because the Gogh palettes use one color for almost every ANSI slot, syntax is di
 | `mono-white` | Mono White | `#FAFAFA` | `#262626` |
 | `mono-yellow` | Mono Yellow | `#FFD300` | `#2B2400` |
 
+Looking for a programmer-focused phosphor theme with syntax luminance steps? See [matrix-pro.nvim](https://github.com/alexesba/matrix-pro.nvim).
+
 ## Requirements
 
 - Neovim 0.8+
